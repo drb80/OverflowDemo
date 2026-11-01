@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
+#include <stdlib.h>
 
 void secret_function() {
     printf("[!] Exploit Success! Redirected code execution to secret_function.\n");
-    _exit(0);
+    exit(0);
 }
 
 void vulnerable_function(char *str) {
