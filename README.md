@@ -43,13 +43,23 @@ Any input of 20 bytes or less stays inside the frame. Bytes 21 through 24 overwr
 
 ## Finding the Target Address
 
-Get the address of `secret_function`:
+There are three ways to get the address of `secret_function`.
+
+**1. `nm`** reads the symbol table without running the program:
 
 ``` bash
 nm vuln | grep secret_function
 ```
 
-This prints the address as a normal number (big-endian, most significant byte first), for example `08049196`. Rebuild the program and rerun `nm` after any change to `vuln.c`, because addresses move when the code changes.
+**2. GDB** shows the same address, along with the symbol name:
+
+``` bash
+gdb -batch -ex 'info address secret_function' ./vuln
+```
+
+**3. The program itself.** Uncomment the `printf` line at the top of `main` in `vuln.c`, rebuild, and run `./vuln`. It prints the address before anything else happens. This is the hint that real attackers would have to find some other way to get.
+
+All three print the address as a normal number (big-endian, most significant byte first), for example `08049196`. Rebuild the program and recheck the address after any change to `vuln.c`, because addresses move when the code changes.
 
 x86 is **little-endian**: the least significant byte is stored at the lowest address. To put `0x08049196` into memory, write the bytes in reverse order:
 
