@@ -14,7 +14,6 @@ void vulnerable_function(char *str) {
 }
 
 int main(int argc, char *argv[]) {
-    // printf("secret_function is at %p\n", (void *)secret_function);
     if (argc < 2) {
         printf("Usage: %s <input_string>\n", argv[0]);
         return 1;

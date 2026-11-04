@@ -57,7 +57,13 @@ nm vuln | grep secret_function
 gdb -batch -ex 'info address secret_function' ./vuln
 ```
 
-**3. The program itself.** Uncomment the `printf` line at the top of `main` in `vuln.c`, rebuild, and run `./vuln`. It prints the address before anything else happens. This is the hint that real attackers would have to find some other way to get.
+**3. The program itself (optional hint).** Add this line at the top of `main` in `vuln.c`, rebuild, and run `./vuln`. It prints the address before anything else happens:
+
+``` c
+printf("secret_function is at %p\n", (void *)secret_function);
+```
+
+This is the hint that real attackers would have to find some other way to get.
 
 All three print the address as a normal number (big-endian, most significant byte first), for example `08049196`. Rebuild the program and recheck the address after any change to `vuln.c`, because addresses move when the code changes.
 
